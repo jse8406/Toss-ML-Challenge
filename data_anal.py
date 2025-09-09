@@ -1,3 +1,79 @@
+# l_feat_1 ~ l_feat_27 히스토그램 그리기 함수 (matplotlib, polars 사용)
+import matplotlib.pyplot as plt
+
+def plot_l_feat_histograms(parquet_path, n):
+	lf = pl.scan_parquet(parquet_path)
+	for i in range(n, n+1):
+		col = f'l_feat_{i}'
+		# 해당 컬럼만 읽어서 결측치 제외
+		data = lf.select(pl.col(col)).collect()[col].drop_nulls().to_list()
+		# 각 값별 개수 출력
+		from collections import Counter
+		value_counts = Counter(data)
+		print(f"{col} 값별 개수:")
+		for v, c in sorted(value_counts.items()):
+			print(f"  {v}: {c}")
+		plt.figure(figsize=(6, 3))
+		plt.hist(data, bins=30, color='skyblue', edgecolor='black')
+		plt.title(f'Histogram of {col}')
+		plt.xlabel(col)
+		plt.ylabel('Count')
+		plt.tight_layout()
+		plt.show()
+# polars: day_of_week 컬럼 카디널리티
+def pl_get_day_of_week_cardinality(parquet_path):
+	lf = pl.scan_parquet(parquet_path)
+	unique_values = lf.select(pl.col('day_of_week')).unique().collect()['day_of_week'].to_list()
+	def sort_key(x):
+		if x is None:
+			return float('-inf')
+		try:
+			return int(x)
+		except:
+			return str(x)
+	unique_values_sorted = sorted(unique_values, key=sort_key)
+	cardinality = len(unique_values_sorted)
+	print(f"Polars day_of_week 컬럼의 카디널리티(고유값 개수): {cardinality}")
+	print("day_of_week 컬럼의 고유값(정렬, 전체):", unique_values_sorted)
+	null_count = lf.select(pl.col('day_of_week').is_null().sum()).collect().item()
+	print(f"day_of_week 컬럼의 None(null) 개수: {null_count}")
+
+# polars: hour 컬럼 카디널리티
+def pl_get_hour_cardinality(parquet_path):
+	lf = pl.scan_parquet(parquet_path)
+	unique_values = lf.select(pl.col('hour')).unique().collect()['hour'].to_list()
+	def sort_key(x):
+		if x is None:
+			return float('-inf')
+		try:
+			return int(x)
+		except:
+			return str(x)
+	unique_values_sorted = sorted(unique_values, key=sort_key)
+	cardinality = len(unique_values_sorted)
+	print(f"Polars hour 컬럼의 카디널리티(고유값 개수): {cardinality}")
+	print("hour 컬럼의 고유값(정렬, 전체):", unique_values_sorted)
+	null_count = lf.select(pl.col('hour').is_null().sum()).collect().item()
+	print(f"hour 컬럼의 None(null) 개수: {null_count}")
+# polars: inventory_id 컬럼 카디널리티
+def pl_get_inventory_id_cardinality(parquet_path):
+	lf = pl.scan_parquet(parquet_path)
+	cardinality = lf.select(pl.col('inventory_id')).unique().count().collect().item()
+	print(f"Polars inventory_id 컬럼의 카디널리티(고유값 개수): {cardinality}")
+	unique_values = lf.select(pl.col('inventory_id')).unique().collect()['inventory_id'].to_list()
+	def sort_key(x):
+		if x is None:
+			return float('-inf')
+		try:
+			return int(x)
+		except:
+			return str(x)
+	unique_values_sorted = sorted(unique_values, key=sort_key)
+	print("inventory_id 컬럼의 고유값(정렬, 전체):", unique_values_sorted)
+	null_count = lf.select(pl.col('inventory_id').is_null().sum()).collect().item()
+	print(f"inventory_id 컬럼의 None(null) 개수: {null_count}")
+
+
 # age_group와 gender가 동시에 None인 row 한 개 예시 출력
 def pl_print_both_null_row_example(parquet_path):
 	lf = pl.scan_parquet(parquet_path)
@@ -22,6 +98,8 @@ def pl_get_gender_cardinality(parquet_path):
 	# None(null) 값 개수 출력
 	null_count = lf.select(pl.col('gender').is_null().sum()).collect().item()
 	print(f"gender 컬럼의 None(null) 개수: {null_count}")
+
+
 def pl_get_age_cardinality(parquet_path):
 	lf = pl.scan_parquet(parquet_path)
 	cardinality = lf.select(pl.col('age_group')).unique().count().collect().item()
@@ -106,6 +184,8 @@ def print_seq_head(parquet_path):
 
 # 실행 예시
 if __name__ == "__main__":
+	# l_feat_1 ~ l_feat_27 히스토그램
+	plot_l_feat_histograms(file_path,1)
 	# pyarrow 기반 예시
 	# print_column_names(file_path)
 	# get_seq_cardinality(file_path)
@@ -117,8 +197,11 @@ if __name__ == "__main__":
 	# pl_print_column_types(file_path)
 	# pl_get_seq_cardinality(file_path)
 	# pl_print_seq_head(file_path)
-	pl_get_age_cardinality(file_path)
-	pl_get_gender_cardinality(file_path)
+	# pl_get_age_cardinality(file_path)
+	# pl_get_gender_cardinality(file_path)
+	# pl_get_inventory_id_cardinality(file_path)
+	# pl_get_day_of_week_cardinality(file_path)
+	# pl_get_hour_cardinality(file_path)
 	# pl_print_both_null_count(file_path)
 	# pl_print_both_null_row_example(file_path)
 	# get_gender_cardinality(file_path)

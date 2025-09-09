@@ -1,2 +1,27 @@
 # Toss-ML-Challenge
 Dacon Toss ML Chanllenge : Predict the CTR with various features : point is feature engineering
+
+## Dataset (데이터 명세)
+
+### Catergocial features
+| 카테고리           | 값(고유값 등)                       |
+|--------------------|-------------------------------------|
+| gender             | 1, 2                                |
+| age_group          | 1 ~ 8                               |
+| inventory_id       |      (['2', '8', '11', '19', '21', '29', '31', '36', '37', '39', '41', '42', '43', '46', '88', '91', '92', '95'])  |
+| day_of_week        | 1 ~ 7               |
+| hour               | 0 ~ 23                    |  
+
+### Numerical features
+| 카테고리           | 값(고유값 등)                       |
+|--------------------|-------------------------------------|
+|seq |'9,18,269,516,57,97,527,74,317,311,269,479,57,74,317,77,58,58,540,269,300,479,57,58,58,74,77,318,479,35,57,516,97,479,35,57,516,97,417,227,35,479,57,97,516,74,318,452,207,51,... |
+
+'l_feat_1', 'l_feat_2', 'l_feat_3', 'l_feat_4', 'l_feat_5', 'l_feat_6', 'l_feat_7', 'l_feat_8', 'l_feat_9', 'l_feat_10', 'l_feat_11', 'l_feat_12', 'l_feat_13', 'l_feat_14', 'l_feat_15', 'l_feat_16', 'l_feat_17', 'l_feat_18', 'l_feat_19', 'l_feat_20', 'l_feat_21', 'l_feat_22', 'l_feat_23', 'l_feat_24', 'l_feat_25', 'l_feat_26', 'l_feat_27', 
+'feat_e_1', 'feat_e_2', 'feat_e_3', 'feat_e_4', 'feat_e_5', 'feat_e_6', 'feat_e_7', 'feat_e_8', 'feat_e_9', 'feat_e_10', 
+'feat_d_1', 'feat_d_2', 'feat_d_3', 'feat_d_4', 'feat_d_5', 'feat_d_6', 
+'feat_c_1', 'feat_c_2', 'feat_c_3', 'feat_c_4', 'feat_c_5', 'feat_c_6', 'feat_c_7', 'feat_c_8',
+'feat_b_1', 'feat_b_2', 'feat_b_3', 'feat_b_4', 'feat_b_5', 'feat_b_6', 
+'feat_a_1', 'feat_a_2', 'feat_a_3', 'feat_a_4', 'feat_a_5', 'feat_a_6', 'feat_a_7', 'feat_a_8', 'feat_a_9', 'feat_a_10', 'feat_a_11', 'feat_a_12', 'feat_a_13', 'feat_a_14', 'feat_a_15', 'feat_a_16', 'feat_a_17', 'feat_a_18',
+'history_a_1', 'history_a_2', 'history_a_3', 'history_a_4', 'history_a_5', 'history_a_6', 'history_a_7', 
+'history_b_1', 'history_b_2', 'history_b_3', 'history_b_4', 'history_b_5', 'history_b_6', 'history_b_7', 'history_b_8', 'history_b_9', 'history_b_10', 'history_b_11', 'history_b_12', 'history_b_13', 'history_b_14', 'history_b_15', 'history_b_16', 'history_b_17', 'history_b_18', 'history_b_19', 'history_b_20', 'history_b_21', 'history_b_22', 'history_b_23', 'history_b_24', 'history_b_25', 'history_b_26', 'history_b_27', 'history_b_28', 'history_b_29', 'history_b_30', 'clicked'
